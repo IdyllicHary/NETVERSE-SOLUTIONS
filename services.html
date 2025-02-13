@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - NetVerse Solutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #4338ca;
+            --text-color: #111827;
+            --light-bg: #f9fafb;
+            --white: #ffffff;
+            --accent: #06b6d4;
+            --gray-light: #f3f4f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .common-services {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .common-services h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .service-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .service-btn {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            padding: 10px;
+            background: var(--white);
+            border: 2px solid var(--gray-light);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .service-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: var(--primary-color);
+        }
+
+        .service-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .service-btn span {
+            font-weight: 500;
+        }
+
+        .services-container {
+            padding: 120px 5% 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-block {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .service-block h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .service-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+        }
+
+        .service-image {
+            width: 100%;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .service-image img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .service-details h3 {
+            color: var(--secondary-color);
+            margin-bottom: 15px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .service-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features i {
+            color: var(--accent);
+        }
+
+        .pricing-box {
+            background: var(--light-bg);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .pricing-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: var(--white);
+            padding: 3rem 5% 1rem;
+            margin-top: 50px
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            margin: 0.8rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+        }
+
+        .footer-section p {
+            margin: 0.5rem 0;
+        }
+
+        .footer-section i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .service-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        .popup-menu {
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 300px;
+            display: none;
+            z-index: 1000;
+        }
+
+        /* eCitizen - Blue Theme */
+        .popup-menu.ecitizen {
+            background: linear-gradient(to bottom right, #e8f0fe, #ffffff);
+            border: 2px solid #4285f4;
+        }
+
+        /* KRA - Green Theme */
+        .popup-menu.kra {
+            background: linear-gradient(to bottom right, #e6f4ea, #ffffff);
+            border: 2px solid #34a853;
+        }
+
+        /* NSSF - Orange Theme */
+        .popup-menu.nssf {
+            background: linear-gradient(to bottom right, #fef3e6, #ffffff);
+            border: 2px solid #ff9800;
+        }
+
+        /* SHA - Deep Blue Theme */
+        .popup-menu.sha {
+            background: linear-gradient(to bottom right, #e3f2fd, #ffffff);
+            border: 2px solid #1976d2;
+        }
+
+        /* NTSA - Forest Green Theme */
+        .popup-menu.ntsa {
+            background: linear-gradient(to bottom right, #e8f5e9, #ffffff);
+            border: 2px solid #2e7d32;
+        }
+
+        /* HELB - Purple Theme */
+        .popup-menu.helb {
+            background: linear-gradient(to bottom right, #f3e8fd, #ffffff);
+            border: 2px solid #9334e6;
+        }
+
+        /* KUCCPS - Red Theme */
+        .popup-menu.kuccps {
+            background: linear-gradient(to bottom right, #fce8e6, #ffffff);
+            border: 2px solid #ea4335;
+        }
+
+        /* TSC - Teal Theme */
+        .popup-menu.tsc {
+            background: linear-gradient(to bottom right, #e4f7fb, #ffffff);
+            border: 2px solid #00acc1;
+        }
+
+        /* TIMS - Indigo Theme */
+        .popup-menu.tims {
+            background: linear-gradient(to bottom right, #e8eaf6, #ffffff);
+            border: 2px solid #3f51b5;
+        }
+
+        .popup-menu::before {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            transform: rotate(45deg);
+            top: -6px;
+            left: 20px;
+        }
+
+        .popup-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .popup-menu li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sticker {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 10px;
+            transform: rotate(-5deg);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(-5deg) scale(1.05); }
+            100% { transform: rotate(-5deg) scale(1); }
+        }
+
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="https://img.freepik.com/free-vector/gradient-network-connection-logo_23-2148865393.jpg" alt="NetVerse Solutions Logo">
+            <span>NetVerse Solutions</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#services">Services</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <div class="services-container">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+
+        <div class="common-services">
+            <h3>Common Services</h3>
+            <div class="service-buttons">
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://immigration.ecitizen.go.ke/permitflow/images/logo.png" alt="eCitizen">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">eCitizen</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://c76c7bbc41.mjedge.net/wp-content/uploads/tc/2024/07/image-2.png" alt="KRA">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">KRA</p>
+                </div>
+                
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://lh3.googleusercontent.com/JtugFGQnNGORMKvGp8lxPBOEKvSosuK07qr4hqcWNRZARVrG3luGo212tKP6VCkdNw=w1024-h500" alt="NTSA">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">NTSA</p>
+                </div>
+
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDCU_ttzCxi2Apb4au7bXaaleJWFfnJUtsmw&s" alt="SHA">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">SHA</p>
+                </div>
+            
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://lenvica.com/wp-content/uploads/2019/07/National-Social-Security-Fund-Kenya.jpg" alt="NSSF">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">NSSF</p>
+                </div>
+            
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://i0.wp.com/institutiontoday.com/wp-content/uploads/2024/01/HELB-logo-Functions.jpg" alt="HELB">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">HELB</p>
+                </div>
+            
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://careers.kuccps.net/Images/KUCCPS-Logo.png" alt="KUCCPS">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">KUCCPS</p>
+                </div>
+            
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://pbs.twimg.com/profile_images/1468181083577626624/xz85n9gy_400x400.jpg" alt="TSC">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">TSC</p>
+                </div>
+            
+                <div style="text-align: center;">
+                    <a href="" class="service-btn" target="_blank">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDltttF0FNlc8POMKMrQNZthc0jxKzbl84ciJ2XL1rpx98sEDDkwuC_RpI8SRiTkLpW78&usqp=CAU" alt="TIMS">
+                    </a>
+                    <p style="display: block; margin-top: 10px;">TIMS</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="service-block" data-aos="fade-up">
+            <h2>Cyber Services</h2>
+            <div class="service-content">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1515378960530-7c0da6231fb1" alt="Cyber Services">
+                </div>
+                <div class="service-details">
+                    <h3>Professional Internet Solutions</h3>
+                    <p>Experience high-speed internet access with our modern facilities and comfortable workstations.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> High-Speed Internet Browsing</li>
+                        <li><i class="fas fa-check-circle"></i> Professional Document Printing</li>
+                        <li><i class="fas fa-check-circle"></i> Scanning & Photocopying Services</li>
+                        <li><i class="fas fa-check-circle"></i> Email Services & Setup</li>
+                        <li><i class="fas fa-check-circle"></i> Online Application Assistance</li>
+                    </ul>
+                    <div class="pricing-box">
+                        <h4>Pricing Information</h4>
+                        <p>Internet Browsing: Ksh. 30/hour</p>
+                        <p>Printing: Ksh. 10/page</p>
+                        <p>Scanning: Ksh. 20/page</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-block" data-aos="fade-up">
+            <h2>Computer Services</h2>
+            <div class="service-content">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97" alt="Computer Services">
+                </div>
+                <div class="service-details">
+                    <h3>Professional Computer Repair & Maintenance</h3>
+                    <p>Expert computer repair and maintenance services to keep your devices running smoothly.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Hardware Repairs & Upgrades</li>
+                        <li><i class="fas fa-check-circle"></i> Software Installation & Updates</li>
+                        <li><i class="fas fa-check-circle"></i> Virus & Malware Removal</li>
+                        <li><i class="fas fa-check-circle"></i> Data Recovery Services</li>
+                        <li><i class="fas fa-check-circle"></i> System Optimization</li>
+                    </ul>
+                    <div class="pricing-box">
+                        <h4>Pricing Information</h4>
+                        <p>Diagnostics: Ksh. 500</p>
+                        <p>Virus Removal: From Ksh. 1000</p>
+                        <p>Hardware Repair: From Ksh. 1500</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-block" data-aos="fade-up">
+            <h2>School Solutions</h2>
+            <div class="service-content">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6" alt="School Solutions">
+                </div>
+                <div class="service-details">
+                    <h3>Comprehensive School Management Solutions</h3>
+                    <p>Digital solutions designed to streamline school operations and enhance educational management.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Student Data Management</li>
+                        <li><i class="fas fa-check-circle"></i> Automated Timetable Generation</li>
+                        <li><i class="fas fa-check-circle"></i> Report Card Processing</li>
+                        <li><i class="fas fa-check-circle"></i> School Management Software</li>
+                        <li><i class="fas fa-check-circle"></i> Digital Resource Management</li>
+                    </ul>
+                    <div class="pricing-box">
+                        <h4>Pricing Information</h4>
+                        <p>Basic Package: Ksh. 5000/month</p>
+                        <p>Standard Package: Ksh. 8000/month</p>
+                        <p>Premium Package: Ksh. 12000/month</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="service-block" data-aos="fade-up">
+            <h2>Computer Training <span class="sticker">Coming Soon</span></h2>
+            <div class="service-content">
+                <div class="service-image">
+                    <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7" alt="Computer Training">
+                </div>
+                <div class="service-details">
+                    <h3>Professional Computer Skills Training</h3>
+                    <p>Comprehensive training programs to enhance your digital literacy and technical skills.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Basic Computer Operations</li>
+                        <li><i class="fas fa-check-circle"></i> Microsoft Office Suite</li>
+                        <li><i class="fas fa-check-circle"></i> Graphic Design Basics</li>
+                        <li><i class="fas fa-check-circle"></i> Internet & Email Usage</li>
+                        <li><i class="fas fa-check-circle"></i> Typing Skills</li>
+                    </ul>
+                    <div class="pricing-box">
+                        <h4>Pricing Information</h4>
+                        <p>Basic Course: Ksh. 8000</p>
+                        <p>Intermediate Course: Ksh. 12000</p>
+                        <p>Advanced Course: Ksh. 15000</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>NetVerse Solutions</h4>
+                <p>Your trusted technology partner in Tassia, Embakasi</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Tassia, Embakasi, Nairobi</p>
+                <p><i class="fas fa-phone"></i> +254 768862031</p>
+                <p><i class="fas fa-envelope"></i> info@netversesolutions.co.ke</p>
+            </div>
+            <div class="footer-section">
+                <h4>Business Hours</h4>
+                <p>Monday - Friday: 8:00 AM - 9:00 PM</p>
+                <p>Saturday: 9:00 AM - 8:00 PM</p>
+                <p>Sunday: 10:00 AM - 7:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NetVerse Solutions. All rights reserved.</p>
+        </div>
+    </footer>    
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        document.querySelector('.service-block:last-child').addEventListener('click', function() {
+            Swal.fire({
+                title: 'Coming Soon!',
+                text: 'Our Computer Training classes are launching soon! Register now to secure your spot in our upcoming batch.',
+                icon: 'info',
+                confirmButtonText: 'Stay Updated',
+                confirmButtonColor: '#4f46e5',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                }
+            });
+        });
+    </script>
+    <script>
+const serviceInfo = {
+    'eCitizen': {
+        title: 'eCitizen Services',
+        services: [
+            '✓ Passport Application',
+            '✓ Temporary Permit',
+            '✓ eVisa and ePassport',
+            '✓ Good Conduct Certificate',
+            '✓ Birth Certificate',
+            '✓ Business Registration',
+            '✓ Marriage Certificate',
+            '✓ Driving License',
+            '✓ Land Search & Title Deeds',
+            '✓ e.t.c'
+        ]
+    },
+    'KRA': {
+        title: 'KRA iTax Services',
+        services: [
+            '✓ PIN Registration',
+            '✓ Forgotten PIN Retrieval',
+            '✓ PIN Ammendment',
+            '✓ Tax Nil Returns Filing',
+            '✓ Tax Employed (P9)Returns Filing',
+            '✓ Tax Compliance Certificate',
+            '✓ VAT Registration',
+            '✓ Withholding Tax',
+            '✓ PAYE Registration',
+            '✓ e.t.c'
+        ]
+    },
+    'NTSA': {
+        title: 'NTSA Services',
+        services: [
+            '✓ Vehicle Registration & Transfer',
+            '✓ Smart DL Application & Renewal',
+            '✓ PSV/TLB License Application',
+            '✓ Vehicle Search',
+            '✓ Vehicle Inspection Booking',
+            '✓ Driving School Services',
+            '✓ Road Service License',
+            '✓ Reflective Number Plates'
+        ]
+    },
+    'SHA': {
+        title: 'SHA Services',
+        services: [
+            '✓ SHA Health Insurance Application',
+        ]
+    },
+    'NSSF': {
+        title: 'NSSF Services',
+        services: [
+            '✓ Member Registration',
+            '✓ Contribution Payment',
+            '✓ Benefits Claims',
+            '✓ Statement Download'
+        ]
+    },
+    'HELB': {
+        title: 'HELB Services',
+        services: [
+            '✓ Loan Application',
+            '✓ Loan Appealing',
+            '✓ Loan Status Check',
+            '✓ Loan Repayment',
+            '✓ Subsequent Loan Application',
+            '✓ Clearance Certificate',
+            '✓ Account Statement'
+        ]
+    },
+    'KUCCPS': {
+        title: 'KUCCPS Services',
+        services: [
+            '✓ Course Application',
+            '✓ Course Revision',
+            '✓ Course Selection',
+            '✓ Placement Results',
+            '✓ Inter-Institution Transfer',
+            '✓ Profile Update'
+        ]
+    },
+    'TSC': {
+        title: 'TSC Services',
+        services: [
+            '✓ Teacher Registration',
+            '✓ License Application',
+            '✓ Employment Application',
+            '✓ Transfer Requests',
+            '✓ Payslip Download'
+        ]
+    },
+    'TIMS': {
+        title: 'NTSA TIMS Services',
+        services: [
+            '✓ Vehicle Registration',
+            '✓ Driving License Renewal',
+            '✓ Smart DL Application',
+            '✓ Vehicle Transfer',
+            '✓ Vehicle Inspection Booking'
+        ]
+    }
+};
+
+document.querySelectorAll('.service-btn').forEach(btn => {
+    btn.addEventListener('mouseenter', function(e) {
+        const serviceName = this.querySelector('img').alt;
+        const info = serviceInfo[serviceName];
+        
+        const popup = document.createElement('div');
+        popup.className = `popup-menu ${serviceName.toLowerCase()}`;
+        popup.innerHTML = `
+            <h4>${info.title}</h4>
+            <ul>
+                ${info.services.map(service => `<li>${service}</li>`).join('')}
+            </ul>
+        `;
+        
+        document.body.appendChild(popup);
+        
+        const popper = Popper.createPopper(this, popup, {
+            placement: 'bottom-start',
+            modifiers: [
+                {
+                    name: 'offset',
+                    options: {
+                        offset: [0, 10],
+                    },
+                },
+            ],
+        });
+        
+        popup.style.display = 'block';
+        
+        this.addEventListener('mouseleave', () => {
+            popup.remove();
+        });
+    });
+});
+    </script>
+</body>
+</html>
