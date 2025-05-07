@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - NetVerse Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #4338ca; 
+            --text-color: #111827;
+            --light-bg: #f9fafb;
+            --white: #ffffff;
+            --accent: #06b6d4;
+            --gray-light: #f3f4f6;
+            --gradient-start: #1a2a6c;
+            --gradient-middle: #b21f1f;
+            --gradient-end: #fdbb2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            scroll-behavior: smooth;
+            background-color: var(--light-bg);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle), var(--gradient-end));
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 5px 0;
+            background: linear-gradient(135deg, var(--gradient-start), var(--gradient-middle));
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover img {
+            transform: scale(1.05);
+        }
+
+        .nav-links a {
+            margin-left: 2rem;
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+        }
+
+        .nav-links a:hover {
+            color: #fff !important;
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu {
+            display: none;
+            cursor: pointer;
+            padding: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu:hover {
+            background: var(--gray-light);
+            border-radius: 50%;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-align: center;
+            margin-top: 0;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 5rem 0;
+        }
+
+        .products-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .products-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 0.8rem 1.5rem;
+            margin: 0.5rem;
+            background: var(--white);
+            border: 2px solid var(--primary-color);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .category-tab.active, .category-tab:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-info h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 600;
+        }
+
+        .product-info p {
+            color: #6b7280;
+            margin-bottom: 1rem;
+            height: 50px;
+            overflow: hidden;
+        }
+
+        .product-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #6b7280;
+            font-size: 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-product {
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-details {
+            background: var(--light-bg);
+            color: var(--text-color);
+        }
+
+        .btn-details:hover {
+            background: var(--gray-light);
+        }
+
+        .btn-cart {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+
+        .btn-cart:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        /* Featured Products */
+        .featured-section {
+            padding: 5rem 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: var(--white);
+        }
+
+        .featured-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .featured-section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .featured-product {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .featured-product:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .featured-image {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .featured-info {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .featured-info h3 {
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .featured-info p {
+            margin-bottom: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .btn-featured {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-featured:hover {
+            background: #0891b2;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Brands Section */
+        .brands-section {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+
+        .brands-section h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-weight: 700;
+        }
+
+        .brand-logo {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--white);
+            border-radius: 10px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 2rem;
+        }
+
+        .brand-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .brand-logo img {
+            max-width: 100%;
+            max-height: 60px;
+            filter: grayscale(100%);
+            transition: filter 0.3s ease;
+        }
+
+        .brand-logo:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-color);
+            color: var(--white);
+            padding: 3rem 5% 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section a {
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            margin: 0.8rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+        }
+
+        .footer-section p {
+            margin: 0.5rem 0;
+        }
+
+        .footer-section i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--white);
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .nav-links a {
+                margin: 0.5rem 0;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .category-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .category-tab {
+                width: 80%;
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+
+            .product-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <div class="logo">
+                <img src="assets/images/logo.png" alt="NetVerse Solutions Logo">
+                <span class="text-white">NetVerse Solutions</span>
+            </div>
+            <button class="navbar-toggler mobile-menu" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto nav-links">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="products.html">Products</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 data-aos="fade-up">Our Products</h1>
+            <p data-aos="fade-up" data-aos-delay="200">Discover our range of high-quality technology products</p>
+        </div>
+    </header>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Browse Our Products</h2>
+            
+            <div class="category-tabs" data-aos="fade-up">
+                <div class="category-tab active" data-category="all">All Products</div>
+                <div class="category-tab" data-category="computers">Computers</div>
+                <div class="category-tab" data-category="accessories">Accessories</div>
+                <div class="category-tab" data-category="networking">Networking</div>
+                <div class="category-tab" data-category="software">Software</div>
+            </div>
+            
+            <div class="row products-container">
+                <!-- Computer Products -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="computers" data-aos="fade-up">
+                    <div class="product-card">
+                        <div class="product-badge">New Arrival</div>
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2068&q=80');"></div>
+                        <div class="product-info">
+                            <h3>HP Pavilion Laptop</h3>
+                            <p>15.6" FHD, Intel Core i5, 8GB RAM, 512GB SSD, Windows 11</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="old-price">KSh 85,000</span>
+                                    <span class="price">KSh 75,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 product-item" data-category="computers" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1611078489935-0cb964de46d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Dell Inspiron Desktop</h3>
+                            <p>Intel Core i7, 16GB RAM, 1TB HDD + 256GB SSD, Windows 11</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 95,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 product-item" data-category="computers" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-card">
+                        <div class="product-badge">Best Seller</div>
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1541807084-5c52b6b3adef?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Lenovo ThinkPad</h3>
+                            <p>14" FHD, Intel Core i5, 16GB RAM, 512GB SSD, Windows 11 Pro</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="old-price">KSh 110,000</span>
+                                    <span class="price">KSh 95,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Accessories Products -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="accessories" data-aos="fade-up">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2028&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Logitech MX Master 3</h3>
+                            <p>Advanced Wireless Mouse with Ultrafast Scrolling</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 12,500</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 product-item" data-category="accessories" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-card">
+                        <div class="product-badge">Hot Deal</div>
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1612444530582-fc66183b16f7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Mechanical Keyboard</h3>
+                            <p>RGB Backlit Gaming Keyboard with Blue Switches</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="old-price">KSh 8,500</span>
+                                    <span class="price">KSh 6,500</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 product-item" data-category="accessories" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1606318313647-137d1f3b4d3c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="product-info">
+                            <h3>External Hard Drive</h3>
+                            <p>2TB USB 3.0 Portable External Hard Drive</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 9,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Networking Products -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="networking" data-aos="fade-up">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1544197150-b99a580bb7a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="product-info">
+                            <h3>TP-Link WiFi Router</h3>
+                            <p>Dual Band Gigabit Wireless Internet Router</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 7,500</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 product-item" data-category="networking" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-card">
+                        <div class="product-badge">New</div>
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1605146769289-440113cc3d00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Network Switch</h3>
+                            <p>8-Port Gigabit Ethernet Unmanaged Switch</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 5,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Software Products -->
+                <div class="col-lg-4 col-md-6 product-item" data-category="software" data-aos="fade-up">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1603969072881-b0fc7f3d77d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Microsoft Office 365</h3>
+                            <p>1-Year Subscription for 1 User (PC/Mac)</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 12,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 product-item" data-category="software" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-card">
+                        <div class="product-image" style="background-image: url('https://images.unsplash.com/photo-1555952494-efd681c7e3f9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="product-info">
+                            <h3>Windows 11 Pro</h3>
+                            <p>Full Version, 1 PC, Digital License</p>
+                            <div class="product-price">
+                                <div>
+                                    <span class="price">KSh 18,000</span>
+                                </div>
+                                <div class="product-actions">
+                                    <a href="#" class="btn-product btn-details">Details</a>
+                                    <a href="#" class="btn-product btn-cart">Add to Cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="featured-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Featured Products</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4" data-aos="fade-up">
+                    <div class="featured-product">
+                        <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2032&q=80');"></div>
+                        <div class="featured-info">
+                            <h3>MacBook Pro M2</h3>
+                            <p>Experience the power of Apple's latest M2 chip with exceptional performance and battery life.</p>
+                            <a href="#" class="btn-featured">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="featured-product">
+                        <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1625842268584-8f3296236761?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="featured-info">
+                            <h3>Gaming PC Bundle</h3>
+                            <p>Complete gaming setup with high-performance PC, monitor, keyboard, and mouse.</p>
+                            <a href="#" class="btn-featured">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="featured-product">
+                        <div class="featured-image" style="background-image: url('https://images.unsplash.com/photo-1563986768609-322da13575f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');"></div>
+                        <div class="featured-info">
+                            <h3>Business Software Suite</h3>
+                            <p>Complete software package for small businesses including accounting, CRM, and productivity tools.</p>
+                            <a href="#" class="btn-featured">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Our Trusted Brands</h2>
+            <div class="row">
+                <div class="col-md-3 col-6" data-aos="fade-up">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Dell_Logo.png/1200px-Dell_Logo.png" alt="Dell">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/1200px-HP_logo_2012.svg.png" alt="HP">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Lenovo_logo_2015.svg/1280px-Lenovo_logo_2015.svg.png" alt="Lenovo">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/1280px-Microsoft_logo_%282012%29.svg.png" alt="Microsoft">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Apple_logo_black.svg/1200px-Apple_logo_black.svg.png" alt="Apple">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/ASUS_Logo.svg/1280px-ASUS_Logo.svg.png" alt="Asus">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Logitech_logo.svg/1280px-Logitech_logo.svg.png" alt="Logitech">
+                    </div>
+                </div>
+                <div class="col-md-3 col-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="brand-logo">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Intel_logo_2022.svg/1280px-Intel_logo_2022.svg.png" alt="Intel">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>NetVerse Solutions</h4>
+                <p>Your trusted technology partner in Tassia, Embakasi</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="products.html">Products</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                <p><i class="fas fa-map-marker-alt"></i> Tassia, Embakasi, Nairobi</p>
+                <p><i class="fas fa-phone"></i> +254 768862031</p>
+                <p><i class="fas fa-envelope"></i> info@netversesolutions.co.ke</p>
+            </div>
+            <div class="footer-section">
+                <h4>Business Hours</h4>
+                <p>Monday - Friday: 8:00 AM - 9:00 PM</p>
+                <p>Saturday: 9:00 AM - 8:00 PM</p>
+                <p>Sunday: 10:00 AM - 7:00 PM</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 NetVerse Solutions. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        mobileMenu.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Category tabs functionality
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const productItems = document.querySelectorAll('.product-item');
+        
+        categoryTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs
+                categoryTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Get category from data attribute
+                const category = tab.getAttribute('data-category');
+                
+                // Show/hide products based on category
+                productItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Add to cart functionality
+        const addToCartButtons = document.querySelectorAll('.btn-cart');
+        
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                const productCard = button.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                
+                Swal.fire({
+                    title: 'Added to Cart!',
+                    text: `${productName} has been added to your cart.`,
+                    icon: 'success',
+                    confirmButtonColor: '#4f46e5',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            });
+        });
+    </script>
+</body>
+</html>
